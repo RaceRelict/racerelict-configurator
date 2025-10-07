@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>RaceRelict Mini Plate Designer</title>
+  <style>
+    canvas { border: 1px solid #ccc; }
+  </style>
+</head>
+<body>
+  <h1>Platziere dein Logo auf der Mini Plate</h1>
+  <input type="file" id="upload" accept="image/*">
+  <canvas id="plateCanvas" width="600" height="400"></canvas>
+
+  <script>
+    const canvas = document.getElementById('plateCanvas');
+    const ctx = canvas.getContext('2d');
+
+    // Beispiel: Mini Plate Hintergrund laden
+    const plate = new Image();
+    plate.src = 'https://dein-bild-link.de/mini-plate.png'; // Ersetze mit deinem Bild
+    plate.onload = () => ctx.drawImage(plate, 0, 0, canvas.width, canvas.height);
+
+    // Logo hochladen und platzieren
+    document.getElementById('upload').addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      const reader = new FileReader();
+      reader.onload = function(event) {
+        const logo = new Image();
+        logo.src = event.target.result;
+        logo.onload = () => ctx.drawImage(logo, 150, 100, 300, 200); // Position & Größe anpassen
+      };
+      reader.readAsDataURL(file);
+    });
+  </script>
+</body>
+</html>
